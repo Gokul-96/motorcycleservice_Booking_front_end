@@ -1,0 +1,65 @@
+.logo-img {
+    height: 80px; 
+    width: 30px; 
+    margin-right: 10px; 
+  }
+
+  /* For service component  */
+.services {
+  text-align: center;
+}
+
+.service-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.service-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.service-card:hover {
+  border-color: #007bff;
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selected {
+  border-color: #28a745;
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4);
+}
+
+.selected-service {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.selected-service h3 {
+  color: #28a745;
+  margin-bottom: 10px;
+}
+
+.selected-service p {
+  margin: 5px 0;
+}
+
+/* Toggle button */
+.btn-selected {
+  background-color: red; 
+  color: white;
+}
+

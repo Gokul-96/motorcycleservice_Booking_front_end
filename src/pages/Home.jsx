@@ -15,7 +15,7 @@ const Home = () => {
       <div className="about container py-5">
         <h2>About Us</h2>
         <p>
-          With over 30 years of experience, Suzu Motorcycle Services is not just a business; it's a passion. We are dedicated motorcycle enthusiasts who believe that every bike deserves the best care. Our skilled team of mechanics and technicians ensures that your motorcycle gets the attention it deserves, from routine maintenance to performance upgrades.
+          With over 30 years of experience Suzu Motorcycle Services is not just a business it's a passion. We are dedicated motorcycle enthusiasts who believe that every bike deserves the best care. Our skilled team of mechanics and technicians ensures that your motorcycle gets the attention it deserves from routine maintenance to performance upgrades.
         </p>
       </div>
     </div>

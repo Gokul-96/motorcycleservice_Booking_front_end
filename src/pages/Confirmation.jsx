@@ -1,23 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const Confirmation = () => {
   const [confirmationData, setConfirmationData] = useState(null);
+  const { bookingId } = useParams(); // Use useParams to get the bookingId from the URL
 
   useEffect(() => {
+    const apiUrl = `http://localhost:5000/confirmation/${bookingId}`;
+    console.log('API URL:', apiUrl);
+  
     // Fetch booking confirmation details from the backend
-    axios.get('http://localhost:3008/confirmation') // Replace with your API endpoint
-      .then(response => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(apiUrl);
         setConfirmationData(response.data);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error fetching confirmation:', error);
-      });
-  }, []);
-
+      }
+    };
+  
+    fetchData(); // Call fetchData fn
+  
+  }, [bookingId]);
   return (
     <div className="confirmation">
-      <h2>Booking Confirmation</h2>
+      <h2>Booking Confirmed</h2>
       {confirmationData ? (
         <div>
           <p>Booking ID: {confirmationData.bookingId}</p>

@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 const Booking = () => {
   const location = useLocation(); // it returns an object that contains information about the current URL location
   //Access location data in component
 
+    // State variable to store the bookingId
+    const [confirmedBookingId, setConfirmedBookingId] = useState();
+
+  const navigate = useNavigate(); //useNavigate hook used to navigate between routes 
+
   let selectedService;
-//location.state - holt the state
+//location.state - hold the state
   if (location.state && location.state.services) {
     selectedService = location.state.services; 
   } else {
@@ -28,9 +33,24 @@ const Booking = () => {
   });
 
  
-const navigate = useNavigate(); //useNavigate hook used to navigate between routes 
+  const initialSelectedServices = location.state?.services || [];
+  const [selectedServices, setSelectedServices] = useState(initialSelectedServices);
+//After return set new value in setselectedservice
 
-const [selectedServices, setSelectedServices] = useState(selectedService);  //After return set new value in setselectedservice
+const handleAddServiceClick = () => {
+  // Navigate to the Services page and pass the current selectedServices as state
+  navigate('/services', { state: { selectedServices } });
+};
+
+
+useEffect(() => {
+  if (location.state?.newServices) {
+    setSelectedServices((prevSelectedServices) => [
+      ...prevSelectedServices,
+      ...location.state.newServices,
+    ]);
+  }
+}, [location.state]);
 
   const handleDeleteService = (serviceToDelete) => {
     console.log('Before deletion:', selectedServices);
@@ -40,12 +60,15 @@ const [selectedServices, setSelectedServices] = useState(selectedService);  //Af
     const confirmDelete = window.confirm(`Want to delete Now "${serviceToDelete.title}"?`);
     if (confirmDelete) {
       setSelectedServices((prevServices) => {
-
+        if (Array.isArray(prevServices)) {
+         
         //filter method to create new array that is updatedServices. This new array includes all services from the previous state (prevServices) except for the one that matches the serviceToDelete.
-        const updatedServices = prevServices.filter((service) => service.id !== serviceToDelete.id); // it means if condition true thn service and serviceToDelete have different id values
+        return prevServices.filter((selected) => selected.id !== serviceToDelete._id); // it means if condition true thn service and serviceToDelete have different id values
         //in other word it use for exclude the service that i wants to delete.
-        console.log('Updated Services:', updatedServices); 
-        return updatedServices;
+        //console.log('Updated Services:', updatedServices); 
+        //return updatedServices;
+         }
+      return prevServices;
       });
     }
   
@@ -59,9 +82,12 @@ const [selectedServices, setSelectedServices] = useState(selectedService);  //Af
       [name]: value, // Assign new value in name
     }));
   };
+  console.log('Booking Data:', bookingData);
+  console.log('Selected Services:', selectedServices);
 
-
-  const handleBookingSubmit = () => {
+  const handleBookingSubmit =async (event) => {
+    event.preventDefault();
+    try{
     if (selectedService.length === 0) {
       console.error('No services selected.');
       return;// Exit early if no service is selected
@@ -77,41 +103,36 @@ const [selectedServices, setSelectedServices] = useState(selectedService);  //Af
 
     // Send bookingData to the backend
     //make HTTP POST requests to a specified URL
-    axios.post('http://localhost:3008/bookings', requestData) //bookingdata -  data being sent in the POST request body & object contain various fields
-      .then((response) => {
-        // Handle success here
+    const response = await axios.post('http://localhost:5000/bookings', requestData)
+     console.log('respon:', response);
+      if (response.status === 201) {
+        const { bookingId } = response.data;
+         // Update the confirmedBookingId state with the received bookingId
+         setConfirmedBookingId(bookingId);
+        console.log('BookingId:', bookingId);
         console.log('Booking confirmed:', response.data);
-        navigate('/confirmation'); // Navigate to confirmation page
-      })
-      .catch((error) => {
-        // Handle error
-        console.error('Error confirming booking:', error);
-      });
-  };
-
-  // State variable to track the edited service
-  const [editedService, setEditedService] = useState(null);
+        navigate(`/confirmation/${bookingId}`);
+      } else {
+        console.error('BookingId is undefined');
+      }
+    }catch(error){
+      console.error('Error confirming booking:', error);
+    }
+};
 
 
-  // Function to update the selectedServices array with edited service
-  const updateSelectedService = (updatedService) => {
-    const updatedServices = selectedService.map((service) =>
-      service.id === updatedService.id ? updatedService : service
-    );
-    setSelectedServices(updatedServices);
-    setEditedService(null); // Clear the edited service state
-  };
+ 
 
 
 
   return (
     <div className="booking">
       <h2>Confirm Booking</h2>
-      {selectedService.length > 0 ? (
+      {selectedServices.length > 0 ? (
         <div>
           <h5>Selected Services</h5>
-          {selectedService.map((service) => (
-            <div key={service.id}>
+          {selectedServices.map((service) => (
+            <div key={service._id}>
               <div>
                 <p>Service: {service.title}</p>
 
@@ -125,6 +146,10 @@ const [selectedServices, setSelectedServices] = useState(selectedService);  //Af
 
         <p>No services selected</p>
       )}
+      <button className="btn-primary" onClick={handleAddServiceClick}>
+        Update Services
+      </button>
+      <div className="input-fields">
       <input type="text" name="name" placeholder="Name" value={bookingData.name} onChange={handleInputChange} />
       <input type="email" name="email" placeholder="Email" value={bookingData.email} onChange={handleInputChange} />
       <input type="tel" name="phoneNumber" placeholder="Phone Number" value={bookingData.phoneNumber} onChange={handleInputChange} />
@@ -133,6 +158,10 @@ const [selectedServices, setSelectedServices] = useState(selectedService);  //Af
       <button className="btn-primary" onClick={handleBookingSubmit}>
         Confirm Booking
       </button>
+      {confirmedBookingId ? (
+        <p>Your Booking ID: {confirmedBookingId}</p>
+      ) : null}
+    </div>
     </div>
   )
 };

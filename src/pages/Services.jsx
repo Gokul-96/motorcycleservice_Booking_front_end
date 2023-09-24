@@ -11,41 +11,73 @@ const Services = () => {
 
   const navigate = useNavigate();
 
-  const handleServiceSelection = (service) => {        // for toggle
-    if (selectedServices.includes(service)) {
-      setSelectedServices(prevSelectedServices =>
-        prevSelectedServices.filter(selected => selected !== service)
+  //toggle
+  const handleServiceSelection = (service) => {
+    //check selected service id equal to existing service id if it match it already selected so now we want deselect service button
+    //some() -  checks if only some elements pass a criteria.Even one element match it return true.
+    if (selectedServices.some((selected) => selected._id === service._id)) {
+      // Deselect the service
+      setSelectedServices((prevSelectedServices) =>
+      //create a new array from a given array
+        prevSelectedServices.filter((selected) => selected._id !== service._id)
       );
     } else {
-      setSelectedServices(prevSelectedServices => [...prevSelectedServices, service]);
+      //updates the selectedServices state by creating a new array that includes all the previously selected services and appends the new service to it
+      setSelectedServices((prevSelectedServices) => [...prevSelectedServices, service]);
     }
   };
 
+  const handleAddServicesClick = () => {
+    // Get the currently selected services
+    const currentSelectedServices = location.state?.selectedServices || [];
+  
+    // Combine the current selected services with the newly selected services
+    const updatedServices = [...currentSelectedServices, ...selectedServices];
+  
+    navigate('/bookings', {
+      state: {
+        services: updatedServices, // Pass the updated services
+      },
+    });
+  };
+
   const handleBookingClick = () => {
+    //checks if there are any selected services (selectedServices.length > 0)
     if (selectedServices.length > 0) {
-      navigate('/booking', { state: { services: selectedServices } });
+      //using navigate fn it navigate to booking page with current state object and inside service property is there.
+      navigate('/bookings', { state: { services: selectedServices } });
+    }
+  };
+
+
+//fetch from service data from backend
+  const fetchServices = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/services')
+      setServices(response.data); //store data
+    }
+    catch(error) {
+      console.error('Error fetching services:', error);
     }
   };
 
   useEffect(() => {
-    axios.get('http://localhost:3008/services')
-      .then(response => {
-        setServices(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching services:', error);
-      });
+  
+    fetchServices();
   }, []);
 
   return (
     
-          <div className="services">
+          <div className="service">
             <h2>Our Services</h2>
             <div className="service-container">
             {services.map((service) => (
   <div
     className={`service-card ${selectedServices.includes(service) ? 'selected' : ''}`}
-    key={parseInt(service.id)}
+    key={service.id}
+    //selected - see styles.css for color changes to green if service select.
+      //if condition true - it will add the string 'selected' to the className.
+       //if condition false - it will add empty string '' to the className. 
   >
     <h3>{service.title}</h3>
     <p>Description: {service.description}</p>
@@ -53,6 +85,7 @@ const Services = () => {
     <p>Category: {service.category}</p>
     <button
       className={`btn-secondary ${selectedServices.includes(service) ? 'btn-selected' : ''}`}
+    
       onClick={() => handleServiceSelection(service)}
     >
                   {/* selectedservices - currently selected service that user has chosen by clicking on it */}
@@ -69,7 +102,7 @@ const Services = () => {
          {/* Display selected services */}
 {selectedServices.length > 0 && (
   <div className="selected-service">
-    <h3>Selected Service{selectedServices.length > 1 ? 's' : ''}</h3>
+  <h3>Selected Service{selectedServices.length > 1 ? 's' : ''}</h3>    {/*  this line for plural - selected services */}
     {selectedServices.map(selectedService => (
       <div key={selectedService.id}>
         <p>Title: {selectedService.title}</p>

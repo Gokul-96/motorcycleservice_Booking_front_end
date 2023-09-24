@@ -19,10 +19,11 @@ function App() {
         {/* inside routes data will change - In webrowser type booking with domain like http://localhost:5173/booking means it shows booking page  */}
           <Route path="/" exact element={<Home />} />  {/* root component */}
           <Route path="/services"  element={<Services />} />  {/*Route - how different parts of a webpage should be rendered based on the URL */}
-          <Route path="/booking" element={<Booking />} />   {/*element - what should be render based on URL */}
+          <Route path="/bookings" element={<Booking />} />   {/*element - what should be render based on URL */}
           <Route path="/contact" element={<Contact />} />
           <Route path="/service/:id" element={<ServiceDetails />} />
-          <Route path="/confirmation" element={<Confirmation />} />
+          <Route path="/confirmation/:bookingId" element={<Confirmation  />} />
+        
          
 
         </Routes>

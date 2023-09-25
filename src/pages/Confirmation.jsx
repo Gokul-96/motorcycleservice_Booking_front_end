@@ -6,23 +6,23 @@ const Confirmation = () => {
   const [confirmationData, setConfirmationData] = useState(null);
   const { bookingId } = useParams(); // Use useParams to get the bookingId from the URL
 
+  const fetchConfirmationData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/confirmation/${bookingId}`)
+      console.log('Data confirmed:', response.data); 
+      setConfirmationData(response.data);
+        console.log('Data confirmed:', response.data);
+    }
+    catch(error) {
+      console.error('Error fetching services:', error);
+    }
+  };
+
   useEffect(() => {
-    const apiUrl = `http://localhost:5000/confirmation/${bookingId}`;
-    console.log('API URL:', apiUrl);
   
-    // Fetch booking confirmation details from the backend
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(apiUrl);
-        setConfirmationData(response.data);
-      } catch (error) {
-        console.error('Error fetching confirmation:', error);
-      }
-    };
-  
-    fetchData(); // Call fetchData fn
-  
+    fetchConfirmationData();
   }, [bookingId]);
+  
   return (
     <div className="confirmation">
       <h2>Booking Confirmed</h2>

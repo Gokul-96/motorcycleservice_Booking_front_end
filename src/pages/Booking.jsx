@@ -8,7 +8,7 @@ const Booking = () => {
 
     // State variable to store the bookingId
     const [confirmedBookingId, setConfirmedBookingId] = useState();
-
+console.log('render');
   const navigate = useNavigate(); //useNavigate hook used to navigate between routes 
 
   let selectedService;
@@ -95,7 +95,7 @@ useEffect(() => {
 
     // Extract service IDs from selected services
     const selectedServiceIds = selectedServices.map((service) => service.id.toString());
-    // Add the selectedServiceIds to the requestData
+    // Add the selectedServiceIds to  requestData
     const requestData = {
       service: selectedServiceIds,
       ...bookingData,
@@ -111,7 +111,10 @@ useEffect(() => {
          setConfirmedBookingId(bookingId);
         console.log('BookingId:', bookingId);
         console.log('Booking confirmed:', response.data);
-        navigate(`/confirmation/${bookingId}`);
+        
+        setTimeout(() => {
+          navigate(`/confirmation/${bookingId}`);
+        }, 10000); 
       } else {
         console.error('BookingId is undefined');
       }
@@ -146,21 +149,28 @@ useEffect(() => {
 
         <p>No services selected</p>
       )}
+
+
+
       <button className="btn-primary" onClick={handleAddServiceClick}>
         Update Services
       </button>
+
       <div className="input-fields">
       <input type="text" name="name" placeholder="Name" value={bookingData.name} onChange={handleInputChange} />
       <input type="email" name="email" placeholder="Email" value={bookingData.email} onChange={handleInputChange} />
       <input type="tel" name="phoneNumber" placeholder="Phone Number" value={bookingData.phoneNumber} onChange={handleInputChange} />
       <input type="text" name="district" placeholder="District" value={bookingData.district} onChange={handleInputChange} />
       <input type="date" name="date" value={bookingData.date} onChange={handleInputChange} />
+      
       <button className="btn-primary" onClick={handleBookingSubmit}>
         Confirm Booking
       </button>
-      {confirmedBookingId ? (
-        <p>Your Booking ID: {confirmedBookingId}</p>
-      ) : null}
+
+      {confirmedBookingId !== undefined && (
+  <p>Your Booking ID: {confirmedBookingId}</p>
+)}
+
     </div>
     </div>
   )

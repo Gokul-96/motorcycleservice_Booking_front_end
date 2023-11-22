@@ -4,27 +4,23 @@ import { useParams } from 'react-router-dom';
 
 const Confirmation = () => {
   const [confirmationData, setConfirmationData] = useState(null);
-  const { bookingId } = useParams(); // Use useParams to get the bookingId from the URL
+  const { bookingId } = useParams();
 
   const fetchConfirmationData = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/confirmation/${bookingId}`)
-      console.log('Data confirmed:', response.data); 
+      const response = await axios.get(`http://localhost:5000/confirmation/${bookingId}`);
       setConfirmationData(response.data);
-        console.log('Data confirmed:', response.data);
-    }
-    catch(error) {
-      console.error('Error fetching services:', error);
+    } catch (error) {
+      console.error('Error fetching confirmation data:', error);
     }
   };
 
   useEffect(() => {
-  
     fetchConfirmationData();
   }, [bookingId]);
-  
+
   return (
-    <div className="confirmation">
+    <div className="confirmation text-center">
       <h2>Booking Confirmed</h2>
       {confirmationData ? (
         <div>
@@ -37,7 +33,7 @@ const Confirmation = () => {
           <p>Date: {confirmationData.date}</p>
         </div>
       ) : (
-        <p>Loading confirmation...</p>
+        <p className="alert alert-info">Loading confirmation...</p>
       )}
     </div>
   );

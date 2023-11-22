@@ -122,7 +122,7 @@ const Booking = () => {
 
         setTimeout(() => {
           navigate(`/confirmation/${bookingId}`);
-        }, 10000);
+        }, 40000);
       } else {
         console.error('BookingId is undefined');
       }
@@ -132,7 +132,7 @@ const Booking = () => {
   };
 
   return (
-    <div className="booking container"> {/* // Bootstrap */}
+    <div className="booking container"> 
       <h2>Confirm Booking</h2>
       {selectedServices.length > 0 ? (
         <div>
@@ -164,7 +164,7 @@ const Booking = () => {
           placeholder="Name"
           value={bookingData.name}
           onChange={handleInputChange}
-          className="form-control" /* // Bootstrap */
+          className="form-control" 
         />
         <input
           type="email"
@@ -172,7 +172,7 @@ const Booking = () => {
           placeholder="Email"
           value={bookingData.email}
           onChange={handleInputChange}
-          className="form-control" /* // Bootstrap */
+          className="form-control" 
         />
         <input
           type="tel"
@@ -180,7 +180,7 @@ const Booking = () => {
           placeholder="Phone Number"
           value={bookingData.phoneNumber}
           onChange={handleInputChange}
-          className="form-control" /* // Bootstrap */
+          className="form-control" 
         />
         <input
           type="text"
@@ -188,14 +188,14 @@ const Booking = () => {
           placeholder="District"
           value={bookingData.district}
           onChange={handleInputChange}
-          className="form-control" /* // Bootstrap */
+          className="form-control" 
         />
         <input
           type="date"
           name="date"
           value={bookingData.date}
           onChange={handleInputChange}
-          className="form-control" /* // Bootstrap */
+          className="form-control" 
         />
 
         <button className="btn btn-primary" onClick={handleBookingSubmit}>

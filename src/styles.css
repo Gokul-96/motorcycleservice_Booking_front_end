@@ -1,47 +1,73 @@
 .logo-img {
-    height: 80px; 
-    width: 30px; 
-    margin-right: 10px; 
-  }
-
-  /* For service component  */
-.services {
-  text-align: center;
+  height: 80px;
+  width: 80px;
+  margin-right: 10px;
 }
 
-.service-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.service-card {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 8px;
+/* For the navigation bar */
+.navbar {
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  border-bottom: 1px solid #ddd;
+}
+
+/* For the container inside the navigation bar */
+.navbar .container {
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center;
+}
+
+/* For the brand link (logo + text) */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* For the navigation links */
+.navbar-nav {
+  margin-left: auto; /* Push the links to the right */
+}
+
+.navbar-nav .nav-item {
+  margin-right: 15px;
+}
+
+.navbar-nav .nav-link {
+  text-decoration: none;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* For the "Logged In" buttons */
+.navbar-nav .nav-link,
+.navbar-nav button {
   cursor: pointer;
 }
 
-.service-card:hover {
-  border-color: #007bff;
-  transform: translateY(-4px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* For the "Login/Signup" button */
+.navbar-nav .nav-link.login-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 }
 
-.selected {
-  border-color: #28a745;
-  transform: translateY(-4px);
-  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4);
+.navbar-nav .nav-link.login-btn:hover {
+  background-color: #0056b3;
+}
+  
+.container {
+  margin-top: 5rem;
 }
 
+/* For the selected service */
 .selected-service {
-  margin-top: 20px;
-  padding: 20px;
+  margin-top: 2rem; 
+  padding: 2rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #fff;
@@ -50,16 +76,229 @@
 
 .selected-service h3 {
   color: #28a745;
-  margin-bottom: 10px;
+  margin-bottom: 1rem; 
 }
 
 .selected-service p {
-  margin: 5px 0;
+  margin: 0.5rem 0;
 }
 
-/* Toggle button */
+/* For the buttons */
+.btn-service {
+  border: 1px solid #ccc;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333; 
+  cursor: pointer;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-service:hover {
+  border-color: #007bff;
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .btn-selected {
-  background-color: red; 
+  background-color: red;
   color: white;
 }
 
+/* Add Bootstrap classes to handle the service card layout */
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.card:hover {
+  border-color: #007bff;
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.border-primary {
+  border-color: #007bff !important; 
+}
+/* For the home container */
+.home {
+  padding: 20px; 
+}
+
+/* For the text centering and vertical spacing */
+.home .text-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px; 
+}
+
+/* For the large heading */
+.home .display-4 {
+  color: #007bff; /* You can change the heading color */
+  font-weight: bold;
+  margin-bottom: 20px; 
+}
+
+/* For the italicized, capitalized, and secondary text */
+.home .fst-italic {
+  font-style: italic;
+}
+
+.home .text-capitalize {
+  text-transform: capitalize;
+}
+
+.home .fs-2 {
+  font-size: 1.5rem; /* You can adjust the font size */
+  color: #6c757d; /* You can change the text color */
+}
+
+/* For the motorcycle image */
+.home .img-fluid {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+/* For the about container */
+.home .about {
+  background-color: #f8f9fa; /* You can change the background color */
+  padding: 20px; /* Adjust the padding as needed */
+  margin-top: 20px; /* Adjust the margin as needed */
+}
+
+/* For the about heading */
+.home .about h2 {
+  color: #007bff; /* You can change the heading color */
+  margin-bottom: 20px; /* Adjust the margin as needed */
+}
+
+/* For the about text */
+.home .about p {
+  color: #333; /* You can change the text color */
+}
+
+/* For the footer */
+.footer {
+  background-color: #f8f9fa; /* You can change the background color */
+  color: #333; /* You can change the text color */
+  padding: 20px 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+/* For the container inside the footer */
+.footer .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* For the copyright text */
+.footer p {
+  margin: 0;
+  font-size: 1rem; 
+  
+}
+
+/* For the links in the footer */
+.footer-link {
+  text-decoration: none;
+  color: #007bff; 
+  
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+/* For the social icons */
+.social-icons {
+  margin-top: 10px;
+}
+
+.footer-icon {
+  color: #333; 
+  
+  font-size: 1.5rem; 
+  
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.footer-icon:hover {
+  color: #007bff; 
+  
+}
+.home {
+  padding: 20px; 
+  
+}
+
+/* For the text centering and vertical spacing */
+.home .text-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px; 
+  
+}
+
+/* For the large heading */
+.home .display-4 {
+  color: #007bff; 
+  
+  font-weight: bold;
+  margin-bottom: 20px; 
+  
+}
+/* For the italicized, capitalized, and secondary text */
+.home .fst-italic {
+  font-style: italic;
+}
+
+.home .text-capitalize {
+  text-transform: capitalize;
+}
+
+.home .fs-2 {
+  font-size: 1.5rem;
+  color: #6c757d; 
+}
+
+/* For the single image */
+.home .single-image {
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px; 
+}
+
+/* For the about container */
+.home .about {
+  background-color: #f8f9fa; 
+  padding: 20px; 
+  margin-top: 20px; 
+  
+}
+
+/* For the about heading */
+.home .about h2 {
+  color: #007bff; 
+  
+  margin-bottom: 20px; 
+  
+}
+
+/* For the about text */
+.home .about p {
+  color: #333; 
+  
+}

@@ -10,6 +10,7 @@ const Confirmation = () => {
     try {
       const response = await axios.get(`http://localhost:5000/confirmation/${bookingId}`);
       setConfirmationData(response.data);
+      console.log('Confirmation Data:', response.data); // Add this line for debugging
     } catch (error) {
       console.error('Error fetching confirmation data:', error);
     }
@@ -25,7 +26,7 @@ const Confirmation = () => {
       {confirmationData ? (
         <div>
           <p>Booking ID: {confirmationData.bookingId}</p>
-          <p>Service: {confirmationData.serviceTitle}</p>
+        
           <p>Name: {confirmationData.name}</p>
           <p>Email: {confirmationData.email}</p>
           <p>Phone Number: {confirmationData.phoneNumber}</p>

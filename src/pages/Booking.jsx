@@ -122,7 +122,7 @@ const Booking = () => {
 
         setTimeout(() => {
           navigate(`/confirmation/${bookingId}`);
-        }, 40000);
+        }, 4000);
       } else {
         console.error('BookingId is undefined');
       }

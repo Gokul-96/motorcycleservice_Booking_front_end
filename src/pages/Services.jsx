@@ -21,7 +21,7 @@ const Services = () => {
   };
 
   const handleAddServicesClick = () => {
-    const currentSelectedServices = location.state?.selectedServices || [];
+    const currentSelectedServices = location.state?.services || [];
     const updatedServices = [...currentSelectedServices, ...selectedServices];
     navigate('/bookings', {
       state: {
@@ -58,12 +58,15 @@ const Services = () => {
 
   const sortServices = (servicesToSort) => {
     return servicesToSort.sort((a, b) => {
+      let comparison = 0;
       if (sortBy === 'title') {
-        return a.title.localeCompare(b.title);
+        comparison = a.title.localeCompare(b.title);
       } else if (sortBy === 'price') {
-        return a.price - b.price;
+        comparison = a.price - b.price;
       }
-      return 0;
+  
+      // Adjust comparison based on sort order
+      return sortOrder === 'asc' ? comparison : -comparison;
     });
   };
 

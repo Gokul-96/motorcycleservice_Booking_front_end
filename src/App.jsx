@@ -11,32 +11,31 @@ import Confirmation from './pages/Confirmation';
 import Login from './pages/Login'; 
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
+import { AuthProvider } from './AuthContext';
+
 
 function App() {
   return (
-    <div>
-   <Router>
-      <div className="app">
-        <Header />     {/*Inside routes data would be static  */}
-      
-        <Routes>
-        {/* inside routes data will change - In webrowser type booking with domain like http://localhost:5173/booking means it shows booking page  */}
-          <Route path="/" exact element={<Home />} />  {/* root component */}
-          <Route path="/services"  element={<Services />} />  {/*Route - how different parts of a webpage should be rendered based on the URL */}
-          <Route path="/bookings" element={<Booking />} />   {/*element - what should be render based on URL */}
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/service/:id" element={<ServiceDetails />} />
-          <Route path="/confirmation/:bookingId" element={<Confirmation  />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/profile" element={<Profile />} />
-
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
-  </div>
-  )
+    <AuthProvider>
+      <Router>
+        <div className="app">
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/bookings" element={<Booking />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/service/:id" element={<ServiceDetails />} />
+            <Route path="/confirmation/:bookingId" element={<Confirmation />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;

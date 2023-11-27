@@ -10,27 +10,34 @@ export const AuthService = {
         },
         body: JSON.stringify({ email, password }),
       });
-
+  
       console.log('Response:', response);
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Data:', data);
-
-        if (data) {
-          return data; // Return the entire data object
-        } else {
-          throw new Error('User data not available in the response');
+  
+      if (!response.ok) {
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (error) {
+          errorData = {};
         }
-      } else {
-        const errorData = await response.json();
-        throw new Error(errorData.error);
+  
+        throw new Error(errorData.error || 'Unknown error');
       }
+  
+      let data;
+      try {
+        data = await response.json();
+      } catch (error) {
+        data = { message: 'exist' };
+      }
+  
+      console.log('Data:', data);
+      return data;
     } catch (error) {
+      console.error('Login error:', error);
       throw error;
     }
   },
-
   signup: async (username, email, password) => {
     try {
       const response = await fetch(`${API_BASE_URL}/signup`, {

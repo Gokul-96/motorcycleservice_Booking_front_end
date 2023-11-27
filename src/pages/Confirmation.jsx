@@ -10,7 +10,7 @@ const Confirmation = () => {
     try {
       const response = await axios.get(`http://localhost:5000/confirmation/${bookingId}`);
       setConfirmationData(response.data);
-      console.log('Confirmation Data:', response.data); // Add this line for debugging
+      console.log('Confirmation Data:', response.data);
     } catch (error) {
       console.error('Error fetching confirmation data:', error);
     }

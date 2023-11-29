@@ -1,18 +1,16 @@
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = 'https://motor-cycle-servicebooking-back-end.onrender.com/';
 
 export const AuthService = {
   login: async (email, password) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/login`, {
+      const response = await fetch(`${API_BASE_URL}login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
       });
-  
-      console.log('Response:', response);
-  
+
       if (!response.ok) {
         let errorData;
         try {
@@ -20,17 +18,17 @@ export const AuthService = {
         } catch (error) {
           errorData = {};
         }
-  
+
         throw new Error(errorData.error || 'Unknown error');
       }
-  
+
       let data;
       try {
         data = await response.json();
       } catch (error) {
-        data = { message: 'exist' };
+        data = 'not exist';
       }
-  
+
       console.log('Data:', data);
       return data;
     } catch (error) {
@@ -40,7 +38,7 @@ export const AuthService = {
   },
   signup: async (username, email, password) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/signup`, {
+      const response = await fetch(`${API_BASE_URL}signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -6,21 +6,27 @@ function ProfileComponent() {
   const { user: loggedInUser } = useAuth();
 
   useEffect(() => {
+    console.log('Inside useEffect');
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/user/${loggedInUser._id}`);
-        if (response.ok) {
-          const userData = await response.json();
-          setUser(userData);
-        } else {
-          throw new Error('Failed to fetch user data');
+        if (loggedInUser && loggedInUser._id) {
+          const response = await fetch(`https://motor-cycle-servicebooking-back-end.onrender.com/user/${loggedInUser._id}`);
+          console.log('Response status:', response.status);
+          if (response.ok) {
+            const userData = await response.json();
+            setUser(userData);
+          } else {
+            throw new Error('Failed to fetch user data');
+          }
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
+        // Handle the case where user data cannot be fetched
+        setUser({ username: 'Unknown', email: 'Unknown' });
       }
     };
 
-    if (loggedInUser) {
+    if (loggedInUser && loggedInUser._id) {
       fetchUserData();
     }
   }, [loggedInUser]);

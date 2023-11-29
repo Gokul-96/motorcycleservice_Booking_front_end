@@ -8,7 +8,7 @@ const Confirmation = () => {
 
   const fetchConfirmationData = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/confirmation/${bookingId}`);
+      const response = await axios.get(`https://motor-cycle-servicebooking-back-end.onrender.com/confirmation/${bookingId}`);
       setConfirmationData(response.data);
       console.log('Confirmation Data:', response.data);
     } catch (error) {

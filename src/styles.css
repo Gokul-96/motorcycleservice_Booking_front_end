@@ -4,13 +4,13 @@
   margin-right: 10px;
 }
 
-/* For the navigation bar */
+/* For navigation bar */
 .navbar {
   background-color: #fff;
   border-bottom: 1px solid #ddd;
 }
 
-/* For the container inside the navigation bar */
+/* For container inside the navigation bar */
 .navbar .container {
   display: flex;
   justify-content: flex-start; 
@@ -26,7 +26,7 @@
   color: #333;
 }
 
-/* For the navigation links */
+/* For navigation links */
 .navbar-nav {
   margin-left: auto; /* Push the links to the right */
 }
@@ -41,13 +41,13 @@
   color: #333;
 }
 
-/* For the "Logged In" buttons */
+/* For "Logged In" buttons */
 .navbar-nav .nav-link,
 .navbar-nav button {
   cursor: pointer;
 }
 
-/* For the "Login/Signup" button */
+/* For "Login/Signup" button */
 .navbar-nav .nav-link.login-btn {
   background-color: #007bff;
   color: #fff;
@@ -64,7 +64,7 @@
   margin-top: 5rem;
 }
 
-/* For the selected service */
+/* For selected service */
 .selected-service {
   margin-top: 2rem; 
   padding: 2rem;
@@ -301,4 +301,8 @@
 .home .about p {
   color: #333; 
   
+}
+
+.input-small {
+  width: 300px; /* Adjust the width as needed */
 }

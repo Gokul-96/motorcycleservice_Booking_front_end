@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import motorcycleImage1 from '../assets/photo1.jpeg';
 import motorcycleImage2 from '../assets/photo2.jpeg';
@@ -9,6 +9,7 @@ import '../styles.css';
 
 const Home = () => {
   const location = useLocation();
+  const navigate = useNavigate(); 
   const [authenticatedUser, setAuthenticatedUser] = useState(null);
   const { user, isAuthenticated } = useAuth();
   const [services, setServices] = useState([]);
@@ -19,7 +20,7 @@ const Home = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/services');
+      const response = await axios.get('https://motor-cycle-servicebooking-back-end.onrender.com/services');
     
       const data = response.data;
 
@@ -82,16 +83,48 @@ const Home = () => {
             <span className="visually-hidden">Next</span>
           </button>
         </div>
+        <br />
+      <br />
         {isAuthenticated() && user && (
+          <div>
   <h3 style={{ color: 'green' }}>
     Hello, {user.username}! You have logged in. You can explore services.
   </h3>
+  <br />
+  <button
+              className="btn btn-primary"
+              onClick={() => {
+                navigate('/services');
+              }}
+            >
+              Explore Services
+            </button>
+          </div>
 )}
         
       </div>
 
 
-      <div className="about container py-5">
+        <div className="about container py-5">
+       
+        <h4 className="mb-4" style={{ fontSize: '24px', color: '#333' }}>Service Advantage</h4>
+        <div className="d-flex justify-content-around">
+         
+          <div className="text-center" style={{ fontSize: '18px', color: '#555' }}>
+            <h5>Free Pick Up and Drop</h5>   
+          </div>
+
+          
+          <div className="text-center" style={{ fontSize: '18px', color: '#555' }}>
+            <h5>Certified Parts Replacement</h5>
+          </div>
+
+         
+          <div className="text-center" style={{ fontSize: '18px', color: '#555' }}>
+            <h5>Trained Service Personnel</h5>
+          </div>
+          
+        </div>
         <h2>About Us</h2>
         <p>
           With over 12 years of experience, Suzu Motorcycle Services is not just a business; it's a passion.
@@ -102,5 +135,6 @@ const Home = () => {
     </div>
   );
 };
+
 
 export default Home;

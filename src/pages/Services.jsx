@@ -38,7 +38,7 @@ const Services = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/services');
+      const response = await axios.get('https://motor-cycle-servicebooking-back-end.onrender.com/services');
       setServices(response.data);
     } catch (error) {
       console.error('Error fetching services:', error);

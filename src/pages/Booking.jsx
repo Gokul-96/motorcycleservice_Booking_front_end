@@ -1,12 +1,14 @@
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AuthService } from '../AuthService';
+import { useAuth } from '../AuthContext';
 
 const Booking = () => {
   const location = useLocation();
   const [confirmedBookingId, setConfirmedBookingId] = useState();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   let selectedService;
 
@@ -69,8 +71,10 @@ const Booking = () => {
         return;
       }
 
-      if (!AuthService.isAuthenticated()) {
+      // Check if the user is authenticated using the context
+      if (!isAuthenticated()) {
         alert('Please log in to confirm the booking.');
+        navigate('/login'); 
         return;
       }
 
@@ -80,21 +84,26 @@ const Booking = () => {
         ...bookingData,
       };
 
-      const response = await axios.post('http://localhost:5000/bookings', requestData, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      const response = await axios.post(
+        'https://motor-cycle-servicebooking-back-end.onrender.com/bookings',
+        requestData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
 
       console.log('Response:', response);
 
+  
       if (response.status === 201) {
         const { bookingId } = response.data;
         setConfirmedBookingId(bookingId);
         console.log('BookingId:', bookingId);
         console.log('Booking confirmed:', response.data);
-
+  
         setTimeout(() => {
           navigate(`/confirmation/${bookingId}`);
         }, 4000);
@@ -128,7 +137,7 @@ const Booking = () => {
       )}
 
       <button className="btn btn-primary" onClick={handleAddServiceClick}>
-        Add More Services
+        Choose New Services
       </button>
 
       <div className="input-fields">
@@ -138,7 +147,7 @@ const Booking = () => {
           placeholder="Name"
           value={bookingData.name}
           onChange={handleInputChange}
-          className="form-control"
+          className="form-control input-small"
         />
         <input
           type="email"
@@ -146,7 +155,7 @@ const Booking = () => {
           placeholder="Email"
           value={bookingData.email}
           onChange={handleInputChange}
-          className="form-control"
+          className="form-control input-small"
         />
         <input
           type="tel"
@@ -154,7 +163,7 @@ const Booking = () => {
           placeholder="Phone Number"
           value={bookingData.phoneNumber}
           onChange={handleInputChange}
-          className="form-control"
+          className="form-control input-small"
         />
         <input
           type="text"
@@ -162,14 +171,14 @@ const Booking = () => {
           placeholder="District"
           value={bookingData.district}
           onChange={handleInputChange}
-          className="form-control"
+          className="form-control input-small"
         />
         <input
           type="date"
           name="date"
           value={bookingData.date}
           onChange={handleInputChange}
-          className="form-control"
+          className="form-control input-small"
         />
 
         <button className="btn btn-primary" onClick={handleBookingSubmit}>

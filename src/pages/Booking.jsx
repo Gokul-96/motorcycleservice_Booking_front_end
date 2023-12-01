@@ -74,7 +74,7 @@ const Booking = () => {
       // Check if the user is authenticated using the context
       if (!isAuthenticated()) {
         alert('Please log in to confirm the booking.');
-        navigate('/login'); 
+        navigate('/signin'); 
         return;
       }
 
@@ -85,7 +85,7 @@ const Booking = () => {
       };
 
       const response = await axios.post(
-        'https://motor-cycle-servicebooking-back-end.onrender.com/bookings',
+        'http://localhost:5000/bookings',
         requestData,
         {
           headers: {

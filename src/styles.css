@@ -306,3 +306,72 @@
 .input-small {
   width: 300px; /* Adjust the width as needed */
 }
+
+.nav-link-custom {
+  color: #333; /* Text color */
+  font-weight: bold; /* Bold text */
+  margin-right: 15px; /* Adjust the right margin as needed */
+  text-decoration: none; /* Remove default underline */
+  transition: color 0.3s; /* Smooth color transition on hover */
+
+ 
+}
+
+/* Hover effect on the navigation links */
+.nav-link-custom:hover {
+  color: #007bff; /* Change color on hover (Bootstrap primary color) */
+}
+
+
+/* Add this class to maintain the same size for carousel images */
+.carousel-image {
+  width: 600px;
+  height: 600px;
+}
+
+/* Add this class to center the button */
+.explore-button {
+  display: block;
+  margin: 0 40%;
+  margin-top: 20px; 
+}
+
+.about {
+  text-align: center;
+}
+
+.service-advantage {
+  margin-bottom: 20px;
+}
+
+.service-advantage h4 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.advantage-list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.advantage-item {
+  text-align: center;
+  width: 30%; /* Adjust the width as needed */
+  padding: 10px;
+  border: 1px solid #ddd; /* Optional: Add a border for better separation */
+  border-radius: 5px; /* Optional: Add border radius for a rounded appearance */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle box shadow */
+}
+
+.advantage-item h5 {
+  font-size: 18px;
+  color: #1882a5;
+  margin: 0;
+}
+
+/* Optional: Add hover effect for better user interaction */
+.advantage-item:hover {
+  background-color: #841ba3;
+  cursor: pointer;
+}

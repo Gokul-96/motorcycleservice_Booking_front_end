@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from "../AuthContext";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import logo from "../assets/logo.jpg";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles.css';
+import { useAuth } from '../AuthContext';
+
 const Header = () => {
   const { isAuthenticated, logout } = useAuth();
 
@@ -25,30 +27,28 @@ const Header = () => {
         <Navbar.Toggle aria-controls="navbarNav" />
         <Navbar.Collapse id="navbarNav">
           <Nav className="mr-auto">
-            <Nav.Link as={Link} to="/">
+            <Nav.Link as={Link} to="/" className="nav-link-custom">
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/services">
+            <Nav.Link as={Link} to="/services" className="nav-link-custom">
               Services
             </Nav.Link>
-            <Nav.Link as={Link} to="/contact">
+            <Nav.Link as={Link} to="/contact" className="nav-link-custom">
               Contact
             </Nav.Link>
-          </Nav>
-          <Nav>
             {isAuthenticated() ? (
-              <>
-                <Nav.Link as={Link} to="/profile">
-                  Profile
-                </Nav.Link>
-                <Button variant="link" onClick={logout}>
-                  Log Out
-                </Button>
-              </>
+              <Button variant="outline-danger" onClick={logout}>
+                Logout
+              </Button>
             ) : (
-              <Nav.Link as={Link} to="/login">
-                <Button variant="primary">Login/Signup</Button>
-              </Nav.Link>
+              <>
+                <Nav.Link as={Link} to="/signup">
+                  <Button variant="primary">SignUp</Button>
+                </Nav.Link>
+                <Nav.Link as={Link} to="/signin">
+                  <Button variant="success">SignIn</Button>
+                </Nav.Link>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>

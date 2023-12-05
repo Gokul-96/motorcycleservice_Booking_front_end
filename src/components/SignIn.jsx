@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState,useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../services/auth';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,10 @@ function SignIn() {
   const userProfile = useSelector((state) => state.user);
 
 
-  
+  useEffect(() => {
+    console.log('From store:', userProfile.user);
+  }, [userProfile.user]);
+
   const handleSignIn = async (event) => {
     event.preventDefault();
 
@@ -22,10 +25,7 @@ function SignIn() {
         payload: user,
       });
   
-      // Wait for the state to be updated before logging
-      setTimeout(() => {
-        console.log('From store:', userProfile.user);
-      }, 0);
+      
   
       navigate('/');
     }

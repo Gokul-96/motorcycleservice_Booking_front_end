@@ -1,7 +1,6 @@
-const getToken =() => {
-    const token = sessionStorage.getItem
-    ('loggedInUser');
-    return User.token;
-}
-
-export default getToken;
+const getToken = () => {
+   const user = sessionStorage.getItem ('loggedInUser');
+   return user.token;
+  };
+  
+  export default getToken;

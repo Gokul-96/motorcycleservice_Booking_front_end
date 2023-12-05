@@ -1,44 +1,50 @@
-
-
-
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../services/auth';
+import { useDispatch, useSelector } from 'react-redux';
 
-
-function Signin() {
-  const navigate = useNavigate();
+function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userProfile = useSelector((state) => state.user);
 
+
+  
   const handleSignIn = async (event) => {
     event.preventDefault();
+
+    const user = await auth.signin({ email, password });
+    if (user) {
+      dispatch({
+        type: 'SIGNIN_SUCCESS',
+        payload: user,
+      });
   
-    try {
-      const response = await auth.signin({ email, password });
-      console.log('Signin successful', response);
+      // Wait for the state to be updated before logging
+      setTimeout(() => {
+        console.log('From store:', userProfile.user);
+      }, 0);
   
-      // Check if the signin was successful
-      if (response && response.data && response.data.token) {
-        // Handle successful signin (e.g., save token to localStorage)
-        navigate('/'); // Redirect to home or another page
-      } else {
-        setError('Invalid email or password. Please try again.');
-      }
-    } catch (error) {
-      console.error('signin failed', error);
-      setError('Invalid email or password. Please try again.');
+      navigate('/');
     }
+  };
+
+  console.log('From store:', userProfile.user);
+
+  const handleLogout = () => {
+    // Dispatch action to clear user state
+    dispatch({ type: 'SIGNOUT' });
+    // Other logout actions like clearing session storage can be added here
   };
 
   return (
     <div className="login container">
-      <h2>Sign In</h2>
-      {error && <div className="alert alert-danger">{error}</div>}
+    <h3>{userProfile.user ? 'Logout' : 'Signin'}</h3>
 
-      <form onSubmit={handleSignIn}>
-      <div className="mb-3">
+    <form onSubmit={userProfile.user ? handleLogout : handleSignIn}>
+        <div className="mb-3">
           <input
             type="email"
             className="form-control input-small"
@@ -56,14 +62,14 @@ function Signin() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        
+
         <button type="submit" className="btn btn-primary">
-          Sign In
+          {userProfile.user ? 'Logout' : 'Sign In'}
         </button>
       </form>
 
       <br />
-      <p>Already have an account?</p>
+      <p>Don't have an account?</p>
       <br />
       <Link to="/signup" className="btn btn-secondary">
         Sign Up
@@ -72,4 +78,4 @@ function Signin() {
   );
 }
 
-export default Signin;
+export default SignIn;

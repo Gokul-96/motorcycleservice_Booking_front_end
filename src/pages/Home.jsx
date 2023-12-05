@@ -1,14 +1,43 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React,{ useEffect, useState} from 'react';
+import { Link,Navigate } from 'react-router-dom';
 import motorcycleImage1 from '../assets/photo1.jpeg';
 import motorcycleImage2 from '../assets/photo2.jpeg';
 import motorcycleImage3 from '../assets/photo3.jpeg';
 import '../styles.css';
+import {useDispatch, useSelector} from 'react-redux';
+import userServices from '../services/users';
 
 const Home = () => {
+
+  const dispatch =useDispatch();
+  const userData = useSelector(state => state.user);
+  const [user,setUser] = useState(null);
+  const getProfile = async () => {
+    if(userData.user) {
+    try {
+      const userInfo = await userServices.getProfile(userData.user.token);
+      setUser(userInfo); 
+    } catch (error) {
+      console.error('Error getting user profile', error);
+    }
+    }
+  };
+  useEffect(() => {
+    getProfile();
+  }, [userData.user]);
+  
+  if (!userData.user) {
+    // If user is not logged in, redirect to the login page
+    return <Navigate to="/signin" replace={true} />;
+  }
   return (
     <div className="home">
       <div className="text-center py-5">
+      <div>
+        <p
+           className="user-info">
+           {user?.username} has logged in! <Link to='/logout' className="logout-link">Logout</Link></p>
+      </div>
         <h1 className="display-4 text-primary mb-4 fw-bold">
           Welcome to Suzu Motorcycle Services
         </h1>
@@ -64,6 +93,7 @@ const Home = () => {
         <br />
       </div>
 
+      
       <Link to="/services" className="btn btn-primary explore-button">
         Explore Services
       </Link>

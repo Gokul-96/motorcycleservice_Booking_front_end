@@ -37,16 +37,21 @@ const Header = () => {
               Contact
             </Nav.Link>
             {isAuthenticated() ? (
-              <Button variant="outline-danger" onClick={logout}>
-                Logout
-              </Button>
+              <>
+                <Nav.Link as={Link} to="/profile" className="nav-link-custom">
+                  Profile
+                </Nav.Link>
+                <Button variant="danger" onClick={logout}>
+                  Logout
+                </Button>
+              </>
             ) : (
               <>
                 <Nav.Link as={Link} to="/signup">
-                  <Button variant="primary">SignUp</Button>
+                  <Button variant="primary">Sign Up</Button>
                 </Nav.Link>
                 <Nav.Link as={Link} to="/signin">
-                  <Button variant="success">SignIn</Button>
+                  <Button variant="success">Sign In</Button>
                 </Nav.Link>
               </>
             )}

@@ -8,9 +8,10 @@ import Booking from './pages/Booking';
 import Contact from './pages/Contact';
 import ServiceDetails from './pages/ServiceDetails';
 import Confirmation from './pages/Confirmation';
-import Signup from './components/SignUp';
-import Signin from './components/SignIn';
+import SignUp from './components/SignUp';
+import SignIn from './components/SignIn';
 import { AuthProvider } from './AuthContext';
+import Logout from './components/LogOut';
 
 
 
@@ -31,8 +32,9 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/service/:id" element={<ServiceDetails />} />
             <Route path="/confirmation/:bookingId" element={<Confirmation />} />
-            <Route path="/signUp" element={<Signup />} />
-            <Route path="/signIn" element={<Signin />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/logout" element={<Logout />} />
           </Routes>
           <Footer />
         </div>

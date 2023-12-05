@@ -375,3 +375,17 @@
   background-color: #841ba3;
   cursor: pointer;
 }
+
+.user-info {
+  font-size: 26px;
+  color: #0a93f4; /* Adjust the color as needed */
+  /* Add other font and paragraph styles here */
+}
+
+.logout-link {
+  text-decoration: none;
+  color: #ff5100; /* Adjust the color as needed */
+  font-weight: bold;
+  margin-left: 8px; /* Add spacing between the username and logout link */
+  /* Add other styles for the logout link here */
+}

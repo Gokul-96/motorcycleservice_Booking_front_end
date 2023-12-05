@@ -5,31 +5,28 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const isAuthenticated = () => {
-    return user !== null;
-  };
-
   const login = (userData) => {
+    // Logic to handle login and set the user
     setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
   };
 
   const logout = () => {
+    // Logic to handle logout and clear the user
     setUser(null);
-     localStorage.removeItem('user');
+  };
+
+  const isAuthenticated = () => {
+    // Check if the user is authenticated (you might have a more complex check)
+    return !!user;
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, user }}>
+    <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
+  return useContext(AuthContext);
 };

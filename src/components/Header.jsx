@@ -42,7 +42,7 @@ const Header = () => {
             <Nav.Link as={Link} to="/contact" className="nav-link-custom">
               Contact
             </Nav.Link>
-            {isAuthenticated() ? (
+            {/* {isAuthenticated() ? (
               <Nav>
                 <Nav.Link as={Link} to="/profile" className="nav-link-custom">
                   Profile
@@ -51,18 +51,18 @@ const Header = () => {
                   Logout
                 </Button>
               </Nav>
-            ) : null /* If authenticated, don't render Sign Up and Sign In */}
-          </Nav>
-          {!isAuthenticated() && (
-            <Nav>
+            ) : null /* If authenticated, don't render Sign Up and Sign In */} 
+          </Nav> 
+          {/* {!isAuthenticated() && (
+            <Nav> */}
               {/* <Nav.Link as={Link} to="/signup">
                 <Button variant="primary">Sign Up</Button>
               </Nav.Link> */}
               {/* <Nav.Link as={Link} to="/signin">
                 <Button variant="success">Sign In</Button>
               </Nav.Link> */}
-            </Nav>
-          )}
+            {/* </Nav>
+          )} */}
         </Navbar.Collapse>
       </div>
     </Navbar>

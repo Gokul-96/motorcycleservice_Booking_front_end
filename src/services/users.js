@@ -7,7 +7,7 @@ const getProfile = async (token) => {
         headers: { authorization: `${token}`}
     }
     console.log('Fetching user profile....');
-    const response = await axios.get('http://localhost:5000/api/users/profile', config);
+    const response = await axios.get('https://motor-cycle-servicebooking-back-end.onrender.com/api/users/profile', config);
     return response.data
   } catch (error) {
     console.error('fetching user profile failed', error);

@@ -137,6 +137,7 @@ const Home = () => {
           best care. Our skilled team of mechanics and technicians ensures that your motorcycle gets
           the attention it deserves from routine maintenance to performance upgrades.
         </p>
+        
       </div>
     </div>
   );

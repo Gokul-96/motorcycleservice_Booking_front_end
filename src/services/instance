@@ -1,7 +1,7 @@
 import axios from "axios";
 import getToken from "../utils/authUtils";
 
-const baseURL = 'https://motor-cycle-servicebooking-back-end.onrender.com/api';
+const baseURL = 'http://localhost:5000/api';
 
 const authInstance = axios.create({
   baseURL: baseURL,

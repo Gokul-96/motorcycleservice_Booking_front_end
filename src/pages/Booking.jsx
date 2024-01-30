@@ -64,17 +64,17 @@ const Booking = () => {
 
   const handleBookingSubmit = async (event) => {
     event.preventDefault();
-
+  
     try {
       if (selectedServices.length === 0) {
         console.error('No services selected.');
         return;
       }
-
+  
       // Check if the user is authenticated using the context
       if (!isAuthenticated()) {
-        alert('Please log in to confirm the booking.');
-        navigate('/signin'); 
+       // Navigate to the sign-in page if the user is not authenticated
+        navigate('/signin');
         return;
       }
 
@@ -85,7 +85,7 @@ const Booking = () => {
       };
 
       const response = await axios.post(
-        'https://motor-cycle-servicebooking-back-end.onrender.com/bookings',
+        'http://localhost:5000/bookings',
         requestData,
         {
           headers: {
@@ -104,9 +104,16 @@ const Booking = () => {
         console.log('BookingId:', bookingId);
         console.log('Booking confirmed:', response.data);
   
-        setTimeout(() => {
+      
+        // Fetch updated user profile after the booking is confirmed
+        const updatedUserProfile = await auth.getProfile(localStorage.getItem('token'));
+        
+        // Check if the user is authenticated again using the updated profile
+        if (auth.isAuthenticated(updatedUserProfile)) {
           navigate(`/confirmation/${bookingId}`);
-        }, 4000);
+        } else {
+          console.error('User is not authenticated.');
+        }
       } else {
         console.error('BookingId is undefined');
       }

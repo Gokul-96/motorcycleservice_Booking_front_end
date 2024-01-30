@@ -20,13 +20,10 @@ const signin = async (credentials, options = {}) => {
     const response = await instance.authInstance.post('/users/signin', credentials);
     
     console.log('Signin Successfull');
- 
 
-
-    //after a successfull signin
-    //store the token in the session storage
-    sessionStorage.setItem('loggedInUser',
-    JSON.stringify(response.data));
+    // Store user authentication data in localStorage
+    localStorage.setItem('loggedInUser', JSON.stringify(response.data));
+    
     return response.data;
 
     

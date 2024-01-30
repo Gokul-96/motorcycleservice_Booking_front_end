@@ -1,6 +1,7 @@
-import React, { useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import auth from '../services/auth';
+import useAuth from '../useAuth'; 
+
 import { useDispatch, useSelector } from 'react-redux';
 
 function SignIn() {
@@ -8,42 +9,40 @@ function SignIn() {
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userProfile = useSelector((state) => state.user);
-
+  
+  // Use the useAuth hook to get the signIn function and userProfile
+  const { signIn, userProfile } = useAuth();
+  
+  // Assuming that 'bookingId' is part of your Redux state
+  const bookingId = useSelector((state) => state.booking.bookingId);
 
   useEffect(() => {
-    console.log('From store:', userProfile.user);
-  }, [userProfile.user]);
+    console.log('After Dispatching SIGNIN_SUCCESS:', userProfile?.user);
+  }, [userProfile]);
 
   const handleSignIn = async (event) => {
     event.preventDefault();
 
-    const user = await auth.signin({ email, password });
+    // Use optional chaining to handle cases where userProfile is undefined
+    const user = await signIn({ email, password });
     if (user) {
       dispatch({
         type: 'SIGNIN_SUCCESS',
         payload: user,
       });
-  
-      
-  
-      navigate('/');
+       // Wait for the userProfile to be updated
+    await new Promise(resolve => setTimeout(resolve, 0));
+      console.log('After dispatching SIGNIN_SUCCESS:', user.user);
+      // Replace 'yourBookingId' with the actual booking ID
+      navigate(`/confirmation/${bookingId}`);
     }
-  };
-
-  console.log('From store:', userProfile.user);
-
-  const handleLogout = () => {
-    // Dispatch action to clear user state
-    dispatch({ type: 'SIGNOUT' });
-    // Other logout actions like clearing session storage can be added here
   };
 
   return (
     <div className="login container">
-    <h3>{userProfile.user ? 'Logout' : 'Signin'}</h3>
+      <h3>{'Signin'}</h3>
 
-    <form onSubmit={userProfile.user ? handleLogout : handleSignIn}>
+      <form onSubmit={handleSignIn}>
         <div className="mb-3">
           <input
             type="email"
@@ -64,9 +63,20 @@ function SignIn() {
         </div>
 
         <button type="submit" className="btn btn-primary">
-          {userProfile.user ? 'Logout' : 'Sign In'}
+          {'Sign In'}
         </button>
       </form>
+      <div className="note">User Credentials</div>
+      <div className="notes">
+        <>
+          <b>Email:</b> gokul@gmail.com
+        </>
+        <br></br>
+        <>
+          <b>Password:</b> gokul
+        </>
+      </div>
+      
 
       <br />
       <p>Don't have an account?</p>

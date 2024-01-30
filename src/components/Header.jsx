@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -10,6 +10,12 @@ import { useAuth } from '../AuthContext';
 
 const Header = () => {
   const { isAuthenticated, logout } = useAuth();
+  const [forceRender, setForceRender] = useState(false);
+  useEffect(() => {
+    // This effect will run whenever isAuthenticated changes
+    // and force a re-render of the Header component
+    setForceRender((prev) => !prev);
+  }, [isAuthenticated]);
 
   return (
     <Navbar bg="light" expand="lg">
@@ -37,25 +43,26 @@ const Header = () => {
               Contact
             </Nav.Link>
             {isAuthenticated() ? (
-              <>
+              <Nav>
                 <Nav.Link as={Link} to="/profile" className="nav-link-custom">
                   Profile
                 </Nav.Link>
                 <Button variant="danger" onClick={logout}>
                   Logout
                 </Button>
-              </>
-            ) : (
-              <>
-                <Nav.Link as={Link} to="/signup">
-                  <Button variant="primary">Sign Up</Button>
-                </Nav.Link>
-                <Nav.Link as={Link} to="/signin">
-                  <Button variant="success">Sign In</Button>
-                </Nav.Link>
-              </>
-            )}
+              </Nav>
+            ) : null /* If authenticated, don't render Sign Up and Sign In */}
           </Nav>
+          {!isAuthenticated() && (
+            <Nav>
+              {/* <Nav.Link as={Link} to="/signup">
+                <Button variant="primary">Sign Up</Button>
+              </Nav.Link> */}
+              {/* <Nav.Link as={Link} to="/signin">
+                <Button variant="success">Sign In</Button>
+              </Nav.Link> */}
+            </Nav>
+          )}
         </Navbar.Collapse>
       </div>
     </Navbar>

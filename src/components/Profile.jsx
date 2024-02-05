@@ -7,7 +7,7 @@ function Profile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/users/Profile');
+        const response = await axios.get('https://motor-cycle-servicebooking-back-end.onrender.com/api/users/Profile');
         setProfileData(response.data);
       } catch (error) {
         console.error('Error fetching profile:', error);

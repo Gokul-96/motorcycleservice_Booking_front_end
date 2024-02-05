@@ -103,7 +103,7 @@ export const AuthProvider = ({ children }) => {
 
    // Check if the user is logged in from local storage on component mount
    useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    const storedUser = JSON.parse(SessionStorage.getItem('loggedInUser'));
     if (storedUser) {
       setUserProfile(storedUser);
       setToken(storedUser.token);

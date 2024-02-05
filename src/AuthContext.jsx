@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
     
     try {
       // Make a request to the backend signup endpoint
-      const response = await fetch('http://localhost:5000/api/users/signup', {
+      const response = await fetch('https://motor-cycle-servicebooking-back-end.onrender.com/api/users/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
         // If signup is successful, set the user profile
         const registeredUser = await response.json();
         setUserProfile(registeredUser);
-        sessionStorage.setItem('loggedInUser', JSON.stringify(registeredUser));
+        localStorage.setItem('loggedInUser', JSON.stringify(registeredUser));
         return registeredUser;
       } else {
         // If there's an error, throw an error with the response message
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const token = getToken();
       console.log("token",token)
-      const response = await fetch('http://localhost:5000/api/users/signin', {
+      const response = await fetch('https://motor-cycle-servicebooking-back-end.onrender.com/api/users/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

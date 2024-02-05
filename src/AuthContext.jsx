@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
         // If signup is successful, set the user profile
         const registeredUser = await response.json();
         setUserProfile(registeredUser);
-        localStorage.setItem('loggedInUser', JSON.stringify(registeredUser));
+        sessionStorage.setItem('loggedInUser', JSON.stringify(registeredUser));
         return registeredUser;
       } else {
         // If there's an error, throw an error with the response message
@@ -103,7 +103,7 @@ export const AuthProvider = ({ children }) => {
 
    // Check if the user is logged in from local storage on component mount
    useEffect(() => {
-    const storedUser = JSON.parse(SessionStorage.getItem('loggedInUser'));
+    const storedUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
     if (storedUser) {
       setUserProfile(storedUser);
       setToken(storedUser.token);

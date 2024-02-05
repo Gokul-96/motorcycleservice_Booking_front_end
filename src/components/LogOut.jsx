@@ -1,21 +1,22 @@
-import React, { useEffect } from 'react';
+
+
+import React from 'react';
+import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 const Logout = () => {
+  const { logout } = useAuth();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-
-    dispatch({ type: 'LOGOUT' });
+  const handleLogout = () => {
+    // Perform any additional logout logic if needed
+    logout();
     navigate('/');
-  }, [dispatch, navigate]);
+  };
 
   return (
     <div>
-      <p>Logging out...</p>
-    
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };

@@ -12,7 +12,7 @@ import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import { AuthProvider } from './AuthContext';
 import Logout from './components/LogOut';
-
+import Profile from './components/Profile';
 
 
 
@@ -35,6 +35,7 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
           <Footer />
         </div>

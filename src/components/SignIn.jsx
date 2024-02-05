@@ -1,89 +1,72 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import useAuth from '../useAuth'; 
-
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 
 function SignIn() {
+  const auth = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  // Use the useAuth hook to get the signIn function and userProfile
-  const { signIn, userProfile } = useAuth();
-  
-  // Assuming that 'bookingId' is part of your Redux state
-  const bookingId = useSelector((state) => state.booking.bookingId);
-
-  useEffect(() => {
-    console.log('After Dispatching SIGNIN_SUCCESS:', userProfile?.user);
-  }, [userProfile]);
+  const location = useLocation();
 
   const handleSignIn = async (event) => {
     event.preventDefault();
+    console.log("Button clicked")
+    try {
+      const signInData = { email, password };
 
-    // Use optional chaining to handle cases where userProfile is undefined
-    const user = await signIn({ email, password });
-    if (user) {
-      dispatch({
-        type: 'SIGNIN_SUCCESS',
-        payload: user,
-      });
-       // Wait for the userProfile to be updated
-    await new Promise(resolve => setTimeout(resolve, 0));
-      console.log('After dispatching SIGNIN_SUCCESS:', user.user);
-      // Replace 'yourBookingId' with the actual booking ID
-      navigate(`/confirmation/${bookingId}`);
+      const user = await auth.signin(signInData);
+
+      // Set the user profile using the actual user data
+      auth.signin(user);
+
+      // Check if there's a redirect state indicating a redirect to the confirmation page
+      const redirectToConfirmation = location.state?.redirectToConfirmation;
+
+      if (redirectToConfirmation) {
+        // If there's a redirect state, navigate to the confirmation page
+        navigate('/confirmation'); // Update the path as needed
+      } else {
+        // Otherwise, navigate to the home page
+        navigate('/'); // Update the path as needed
+      }
+    } catch (error) {
+      // Handle authentication failure, e.g., display an error message
+      console.error('Authentication failed:', error.message);
     }
   };
 
   return (
-    <div className="login container">
-      <h3>{'Signin'}</h3>
+    <div>
+      {auth.isAuthenticated() ? (
+        <p>Welcome, {auth.userProfile.user.username}!</p>
+      ) : (
+        <form onSubmit={handleSignIn}>
+          <div className="mb-3">
+            <input
+              type="email"
+              className="form-control input-small"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="off" 
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="password"
+              className="form-control input-small"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="off" 
+            />
+          </div>
 
-      <form onSubmit={handleSignIn}>
-        <div className="mb-3">
-          <input
-            type="email"
-            className="form-control input-small"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="mb-3">
-          <input
-            type="password"
-            className="form-control input-small"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-
-        <button type="submit" className="btn btn-primary">
-          {'Sign In'}
-        </button>
-      </form>
-      <div className="note">User Credentials</div>
-      <div className="notes">
-        <>
-          <b>Email:</b> gokul@gmail.com
-        </>
-        <br></br>
-        <>
-          <b>Password:</b> gokul
-        </>
-      </div>
-      
-
-      <br />
-      <p>Don't have an account?</p>
-      <br />
-      <Link to="/signup" className="btn btn-secondary">
-        Sign Up
-      </Link>
+          <button type="submit">Sign In</button>
+        </form>
+      )}
+      <Link to="/signup">Sign Up</Link>
     </div>
   );
 }

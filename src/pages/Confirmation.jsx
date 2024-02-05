@@ -17,7 +17,7 @@ const Confirmation = () => {
             console.log('Token:', userProfile.token); // Log the token
             console.log('Booking ID:', bookingId); // Log the booking ID
         const response = await axios.get(
-          `https://motor-cycle-servicebooking-back-end.onrender.com/confirmation/${bookingId}`,
+          `http://localhost:5000/confirmation/${bookingId}`,
           {
             headers: {
               Authorization: `Bearer ${userProfile.token}`,

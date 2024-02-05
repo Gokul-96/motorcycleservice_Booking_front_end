@@ -1,57 +1,22 @@
-import React,{ useEffect, useState} from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+
+import { Link } from 'react-router-dom';
 import motorcycleImage1 from '../assets/photo1.jpeg';
 import motorcycleImage2 from '../assets/photo2.jpeg';
 import motorcycleImage3 from '../assets/photo3.jpeg';
 import '../styles.css';
-import {useDispatch, useSelector} from 'react-redux';
-import userServices from '../services/users';
+// import {useDispatch, useSelector} from 'react-redux';
+
 
 const Home = () => {
 
-  const dispatch =useDispatch();
-  const userData = useSelector(state => state.user);
-  const [user,setUser] = useState(null);
-  const navigate = useNavigate();
-  const getProfile = async () => {
-    if(userData.user) {
-    try {
-      const userInfo = await userServices.getProfile(userData.user.token);
-      setUser(userInfo); 
-    } catch (error) {
-      console.error('Error getting user profile', error);
-    }
-    }
-  };
+ 
 
-  const handleLogout = () => {
-    // Perform logout actions here, such as clearing user data from state or localStorage
-    // For example, dispatch an action to clear user data
-    dispatch({ type: 'LOGOUT' });
-
-    // Navigate to the logout page or any other desired page
-    navigate('/logout');
-  };
-  useEffect(() => {
-    getProfile();
-  }, [userData.user]);
   
 
   return (
     <div className="home">
-      <div className="text-center py-5">
-      <div>
-      <p className="user-info">
-  {user?.username && (
-    <>
-      {user?.username} has logged in!{' '}
-      <button className="logout-link" onClick={handleLogout}>
-        Logout
-      </button>
-    </>
-  )}
-</p>
-      </div>
+   
+      
         <h1 className="display-4 text-primary mb-4 fw-bold">
           Welcome to Suzu Motorcycle Services
         </h1>
@@ -105,7 +70,7 @@ const Home = () => {
         </div>
         <br />
         <br />
-      </div>
+      
 
       
       <Link to="/services" className="btn btn-primary explore-button">

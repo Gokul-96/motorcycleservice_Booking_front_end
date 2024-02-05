@@ -8,8 +8,9 @@ const Booking = () => {
   const location = useLocation();
   const [confirmedBookingId, setConfirmedBookingId] = useState();
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
-
+  const { isAuthenticated, token } = useAuth();
+  console.log('Token:', token);
+  //If services in location state assign it to selected service if not initialize empty 
   let selectedService;
 
   if (location.state && location.state.services) {
@@ -85,12 +86,12 @@ const Booking = () => {
       };
 
       const response = await axios.post(
-        'https://motor-cycle-servicebooking-back-end.onrender.com/bookings',
+        'http://localhost:5000/bookings',
         requestData,
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -103,17 +104,17 @@ const Booking = () => {
         setConfirmedBookingId(bookingId);
         console.log('BookingId:', bookingId);
         console.log('Booking confirmed:', response.data);
-  
+        navigate(`/confirmation/${bookingId}`);
       
         // Fetch updated user profile after the booking is confirmed
-        const updatedUserProfile = await auth.getProfile(localStorage.getItem('token'));
+        // const updatedUserProfile = await auth.getProfile(sessionStorage.getItem('token'));
         
         // Check if the user is authenticated again using the updated profile
-        if (auth.isAuthenticated(updatedUserProfile)) {
-          navigate(`/confirmation/${bookingId}`);
-        } else {
-          console.error('User is not authenticated.');
-        }
+        // if (auth.isAuthenticated(updatedUserProfile)) {
+        //   navigate(`/confirmation/${bookingId}`);
+        // } else {
+        //   navigate('/signin', { state: { redirectToConfirmation: true } });
+        // }
       } else {
         console.error('BookingId is undefined');
       }
@@ -154,6 +155,7 @@ const Booking = () => {
           placeholder="Name"
           value={bookingData.name}
           onChange={handleInputChange}
+          autoComplete="off" 
           className="form-control input-small"
         />
         <input
@@ -162,6 +164,7 @@ const Booking = () => {
           placeholder="Email"
           value={bookingData.email}
           onChange={handleInputChange}
+          autoComplete="off" 
           className="form-control input-small"
         />
         <input

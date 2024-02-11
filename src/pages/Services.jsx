@@ -36,19 +36,24 @@ const Services = () => {
     }
   };
 
-  
-  const fetchServices = async () => {
+  const fetchServices = async (callback) => {
     try {
-      const response = await axios.get('https://motor-cycle-servicebooking-back-end.onrender.com/services');
+      const response = await axios.get('http://localhost:5000/services');
       console.log('Axios response:', response);
       setServices(response.data);
+      if (callback) {
+        callback(response.data); 
+      }
     } catch (error) {
       console.error('Error fetching services:', error);
     }
   };
 
   useEffect(() => {
-    fetchServices();
+    fetchServices((data) => {
+      
+      console.log('Services fetched:', data);
+    });
   }, []);
 
   const filterServices = () => {

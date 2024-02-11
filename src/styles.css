@@ -389,3 +389,60 @@
   margin-left: 8px; /* Add spacing between the username and logout link */
   /* Add other styles for the logout link here */
 }
+
+
+.profile {
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.profile .username {
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* confirmation */
+.confirmation {
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 600px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333333;
+}
+
+.confirmation p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #555555;
+}
+
+.confirmation .details {
+  margin-top: 20px;
+}
+
+.confirmation .details p {
+  font-weight: bold;
+  color: #444444;
+}
+
+/* Customize background and additional styles */
+.confirmation {
+  background-image: linear-gradient(to bottom, #ffffff, #f0f0f0);
+}
+
+.confirmation .details {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}

@@ -1,37 +1,33 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-
+import Profile from './Profile'; 
 function SignIn() {
   const auth = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleSignIn = async (event) => {
     event.preventDefault();
-    console.log("Button clicked")
     try {
       const signInData = { email, password };
-
       const user = await auth.signin(signInData);
 
-      // Set the user profile using the actual user data
-      auth.signin(user);
-
-      // Check if there's a redirect state indicating a redirect to the confirmation page
-      const redirectToConfirmation = location.state?.redirectToConfirmation;
-
-      if (redirectToConfirmation) {
-        // If there's a redirect state, navigate to the confirmation page
-        navigate('/confirmation'); // Update the path as needed
-      } else {
-        // Otherwise, navigate to the home page
-        navigate('/'); // Update the path as needed
-      }
+      setSuccessMessage('Sign in successful.');
+      setTimeout(() => {
+        const redirectToConfirmation = location.state?.redirectToConfirmation;
+        if (redirectToConfirmation) {
+          navigate('/confirmation'); // Update the path as needed
+        } else {
+          navigate('/'); 
+        }
+      }, 3000);
     } catch (error) {
-      // Handle authentication failure, e.g., display an error message
+      setErrorMessage('Please enter correct email and password.');
       console.error('Authentication failed:', error.message);
     }
   };
@@ -39,32 +35,37 @@ function SignIn() {
   return (
     <div>
       {auth.isAuthenticated() ? (
-        <p>Welcome, {auth.userProfile.user.username}!</p>
+        <Profile /> 
       ) : (
-        <form onSubmit={handleSignIn}>
-          <div className="mb-3">
-            <input
-              type="email"
-              className="form-control input-small"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              autoComplete="off" 
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="password"
-              className="form-control input-small"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="off" 
-            />
-          </div>
-
-          <button type="submit">Sign In</button>
-        </form>
+        <div>
+          {errorMessage && <div>{errorMessage}</div>}
+          {successMessage && <div>{successMessage}</div>}
+          <form onSubmit={handleSignIn}>
+            <div className="mb-3">
+              <input
+                type="email"
+                required
+                className="form-control input-small"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="off"
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                type="password"
+                required
+                className="form-control input-small"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="off"
+              />
+            </div>
+            <button type="submit">Sign In</button>
+          </form>
+        </div>
       )}
       <Link to="/signup">Sign Up</Link>
     </div>

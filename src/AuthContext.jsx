@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
     
     try {
       // Make a request to the backend signup endpoint
-      const response = await fetch('https://motor-cycle-servicebooking-back-end.onrender.com/api/users/signup', {
+      const response = await fetch('http://localhost:5000/api/users/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,10 +52,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signin = async (userData) => {
+    console.log("userData:",userData)
     try {
       const token = getToken();
       console.log("token",token)
-      const response = await fetch('https://motor-cycle-servicebooking-back-end.onrender.com/api/users/signin', {
+      const response = await fetch('http://localhost:5000/api/users/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,7 +65,7 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify(userData),
       });
   
-      console.log('Request payload (signin function):', userData);
+      
   
       if (response.ok) {
         const authenticatedUser = await response.json();

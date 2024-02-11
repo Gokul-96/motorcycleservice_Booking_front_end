@@ -9,7 +9,7 @@ const Logout = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Perform any additional logout logic if needed
+    
     logout();
     navigate('/');
   };

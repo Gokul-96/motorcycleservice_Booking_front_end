@@ -67,6 +67,12 @@ function SignIn() {
           </form>
         </div>
       )}
+      <>
+      <p>
+        Email: gok@gmail.com
+        Password:gok@123
+      </p>
+      </>
       <Link to="/signup">Sign Up</Link>
     </div>
   );

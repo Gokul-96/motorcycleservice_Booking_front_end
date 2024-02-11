@@ -14,7 +14,7 @@ const Confirmation = () => {
       try {
         if (userProfile && userProfile.token) {
           const response = await axios.get(
-            `https://motor-cycle-servicebooking-back-end.onrender.com/${bookingId}`,
+            `https://motor-cycle-servicebooking-back-end.onrender.com/confirmation/${bookingId}`,
             {
               headers: {
                 Authorization: `Bearer ${userProfile.token}`,
